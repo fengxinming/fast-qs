@@ -1,15 +1,11 @@
-import _appendQuery from './_appendQuery';
-import _parseQuery from './_parseQuery';
-import _stringifyQuery from './_stringifyQuery';
-import unescape from './decode';
-import escape from './encode';
+import _parse from './_parse';
+import _stringify from './_stringify';
 
 function _appendQuery(url, qs) {
   let questionMark = -1;
   let hashMark = -1;
   const len = url.length;
 
-  // eslint-disable-next-line no-labels
   loop: for (let i = 0; i < len; i++) {
     switch (url[i]) {
       case '?':
@@ -17,7 +13,6 @@ function _appendQuery(url, qs) {
         break;
       case '#':
         hashMark = i;
-        // eslint-disable-next-line no-labels
         break loop;
       default:
     }
@@ -63,7 +58,8 @@ export default function append(url, query, opts) {
     encode = opts.encodeURIComponent;
     sep = opts.sep || '&';
     eq = opts.eq || '=';
-  } else {
+  }
+  else {
     sep = '&';
     eq = '=';
   }
@@ -71,7 +67,7 @@ export default function append(url, query, opts) {
   switch (typeof query) {
     case 'object': {
       const ret = [];
-      _stringifyQuery(query, encode || escape, filter
+      _stringify(query, encode, filter
         ? (key, val) => {
           if (filter(key, val)) {
             ret[ret.length] = key + eq + val;
@@ -86,13 +82,14 @@ export default function append(url, query, opts) {
     case 'string':
       if (filter) {
         const ret = [];
-        _parseQuery(query, sep, eq, decode || unescape, (key, val) => {
+        _parse(query, sep, eq, decode, (key, val) => {
           if (filter(key, val)) {
             ret[ret.length] = key + eq + val;
           }
         });
         qs = ret.join(sep);
-      } else {
+      }
+      else {
         qs = query;
       }
       break;
