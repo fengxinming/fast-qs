@@ -1,10 +1,4 @@
-import unescape from './unescape';
-
 export default function _parse(str, sep, eq, decode, cb) {
-  if (!decode) {
-    decode = unescape;
-  }
-
   let matchedKey = '';
   let matchedValue = '';
 

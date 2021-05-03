@@ -1,5 +1,6 @@
 import isObject from 'celia/es/isObject';
 import _stringify from './_stringify';
+import escape from './escape';
 
 export default function stringifyQuery(obj, sep, eq, options) {
   if (!isObject(obj)) {
@@ -20,8 +21,9 @@ export default function stringifyQuery(obj, sep, eq, options) {
   eq || (eq = '=');
 
   const ret = [];
-  _stringify(obj, (options && options.encodeURIComponent), (key, val) => {
+  _stringify(obj, (options && options.encodeURIComponent) || escape, (key, val) => {
     ret[ret.length] = key + eq + val;
   });
+
   return ret.join(sep);
 }

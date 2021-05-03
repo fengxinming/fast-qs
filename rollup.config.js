@@ -1,7 +1,9 @@
 import buble from '@rollup/plugin-buble';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import match from 'rollup-plugin-match';
 import empty from 'rollup-plugin-empty';
+import combine from 'rollup-plugin-combine';
 import copy from 'rollup-plugin-copy';
 import replaceImports from 'rollup-plugin-replace-imports';
 import camelcase from 'camelcase';
@@ -13,7 +15,7 @@ const banner = `/* ${pkg.name}.js v${pkg.version} (c) 2021-${new Date().getFullY
 const globalName = camelcase(pkg.name);
 
 export default [{
-  input: 'src/index.js',
+  input: 'src/**/*.js',
   plugins: [
     empty({
       silent: false,
@@ -27,17 +29,22 @@ export default [{
         { src: 'types/index.d.ts', dest: 'dist' }
       ]
     }),
+    match(),
+    combine({
+      outputDir: true,
+      camelCase: false
+    }),
     buble()
   ],
   output: [
     {
       banner,
-      file: 'dist/esm.js',
+      dir: 'dist/es',
       format: 'es'
     },
     {
       banner,
-      file: 'dist/cjs.js',
+      dir: 'dist',
       format: 'cjs',
       exports: 'auto',
       plugins: [
@@ -46,8 +53,12 @@ export default [{
     }
   ]
 }, {
-  input: 'src/index.js',
+  input: 'src/**/*.js',
   plugins: [
+    match(),
+    combine({
+      camelCase: false
+    }),
     nodeResolve(),
     commonjs(),
     buble()

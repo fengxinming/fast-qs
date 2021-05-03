@@ -1,5 +1,7 @@
 import _parse from './_parse';
 import _stringify from './_stringify';
+import escape from './escape';
+import unescape from './unescape';
 
 function _appendQuery(url, qs) {
   let questionMark = -1;
@@ -67,7 +69,7 @@ export default function append(url, query, opts) {
   switch (typeof query) {
     case 'object': {
       const ret = [];
-      _stringify(query, encode, filter
+      _stringify(query, encode || escape, filter
         ? (key, val) => {
           if (filter(key, val)) {
             ret[ret.length] = key + eq + val;
@@ -82,7 +84,7 @@ export default function append(url, query, opts) {
     case 'string':
       if (filter) {
         const ret = [];
-        _parse(query, sep, eq, decode, (key, val) => {
+        _parse(query, sep, eq, decode || unescape, (key, val) => {
           if (filter(key, val)) {
             ret[ret.length] = key + eq + val;
           }

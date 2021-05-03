@@ -44,11 +44,11 @@ module.exports = {
     stringify4(testData5);
   },
 
-  '【stringifyQuery】': function () {
+  '【stringify】': function () {
     stringifyQuery(testData1);
     stringifyQuery(testData2);
     stringifyQuery(testData3);
     stringifyQuery(testData4);
     stringifyQuery(testData5);
-  },
+  }
 };

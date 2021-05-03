@@ -48,12 +48,12 @@ module.exports = {
     parse4(testData5.slice(1));
   },
 
-  '【parseQuery】': function () {
+  '【parse】': function () {
     parseQuery(null);
     parseQuery(testData1);
     parseQuery(testData2);
     parseQuery(testData3);
     parseQuery(testData4);
     parseQuery(testData5);
-  },
+  }
 };

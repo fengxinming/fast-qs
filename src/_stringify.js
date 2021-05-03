@@ -1,4 +1,3 @@
-import escape from './escape';
 import createHasOwn from 'celia/es/_createHasOwn';
 
 const { isArray } = Array;
@@ -19,10 +18,6 @@ function convert(value, encode) {
 }
 
 export default function _stringify(obj, encode, callback) {
-  if (!encode) {
-    encode = escape;
-  }
-
   const hasOwn = createHasOwn(obj);
   for (const key in obj) {
     if (key && hasOwn(obj, key)) {
