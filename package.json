@@ -2,9 +2,9 @@
   "name": "fast-qs",
   "version": "1.0.0",
   "description": "A tiny query string parsing and stringifying library.",
-  "main": "cjs.js",
-  "module": "esm.js",
-  "jsnext:main": "esm.js",
+  "main": "index.js",
+  "module": "./es/index.js",
+  "jsnext:main": "./es/index.js",
   "unpkg": "umd.js",
   "jsdelivr": "umd.js",
   "scripts": {
