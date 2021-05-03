@@ -58,8 +58,18 @@ fastClassnames(null, false, 'bar', undefined, 0, 1, { baz: null }, ''); // => 'b
 
 ## Benchmark
 
-【classnames】 x 319,625 ops/sec ±18.60% (76 runs sampled)
+【querystring.parse】 x 89,068 ops/sec ±0.36% (94 runs sampled)
+【querystringify.parse】 x 70,472 ops/sec ±0.41% (93 runs sampled)
+【query-string.parse】 x 40,702 ops/sec ±0.54% (95 runs sampled)
+【qs.parse】 x 38,423 ops/sec ±0.20% (92 runs sampled)
+【parseQuery】 x 201,042 ops/sec ±0.32% (93 runs sampled)
+The fastest is 【parseQuery】
 
-【fastClassnames】 x 520,426 ops/sec ±0.31% (92 runs sampled)
+【querystring.stringify】 x 113,896 ops/sec ±0.26% (92 runs sampled)
+【querystringify.stringify】 x 47,602 ops/sec ±0.37% (92 runs sampled)
+【query-string.stringify】: // 应该是中途抛异常了
+【qs.stringify】 x 75,845 ops/sec ±0.61% (91 runs sampled)
+【stringifyQuery】 x 143,289 ops/sec ±0.50% (95 runs sampled)
+The fastest is 【stringifyQuery】
 
-The fastest is 【fastClassnames】
+
