@@ -200,8 +200,6 @@ By default, the `unescape()` method will attempt to use the JavaScript built-in 
 
 ### parse
 
-【querystring.parse】 x 89,068 ops/sec ±0.36% (94 runs sampled)
-
 【querystringify.parse】 x 70,472 ops/sec ±0.41% (93 runs sampled)
 
 【query-string.parse】 x 40,702 ops/sec ±0.54% (95 runs sampled)
@@ -213,8 +211,6 @@ By default, the `unescape()` method will attempt to use the JavaScript built-in 
 The fastest is 【parse】
 
 ### stringify
-
-【querystring.stringify】 x 113,896 ops/sec ±0.26% (92 runs sampled)
 
 【querystringify.stringify】 x 47,602 ops/sec ±0.37% (92 runs sampled)
 
