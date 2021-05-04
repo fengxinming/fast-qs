@@ -17,12 +17,12 @@
     "url": "git+https://github.com/fengxinming/fast-qs.git"
   },
   "keywords": [
-    "react",
-    "css",
-    "classes",
-    "classname",
-    "classnames",
-    "util"
+    "querystring",
+    "qs",
+    "query",
+    "url",
+    "parse",
+    "stringify"
   ],
   "author": "Jesse Feng <fxm0016@126.com>",
   "license": "MIT",
