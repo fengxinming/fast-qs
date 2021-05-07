@@ -74,6 +74,9 @@ it('测试 appendQuery', () => {
       return key !== 'hideTopbar' && key !== 'hideSidebar';
     }
   })).toBe('http://demo.com?a=1&b=1&c=1');
+  expect(appendQuery('http://demo.com', 'a=1&b=1&c=1&hideTopbar=1&hideSidebar=1', (key) => {
+    return key !== 'hideTopbar' && key !== 'hideSidebar';
+  })).toBe('http://demo.com?a=1&b=1&c=1');
   expect(appendQuery('http://demo.com', { a: 1, b: 1, c: 1, hideTopbar: 1, hideSidebar: 1 }, {
     filter(key) {
       return key !== 'hideTopbar' && key !== 'hideSidebar';

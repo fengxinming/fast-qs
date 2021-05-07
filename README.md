@@ -62,9 +62,9 @@ export {
 
 ### append(url, query[, opts])
 
-- `url` `<string>` a string URL to append to.
-- `query` `<string|object>` a string or object containing query params to append.
-- `options` `[object]`
+- `url` `<string>` A string URL to append to.
+- `query` `<string|object>` A string or object containing query params to append.
+- `options` `[object|Function]` If `options` is a string, then it specifies the `filter`.
   - `encodeURIComponent` `[Function]` The function to use when converting URL-unsafe characters to percent-encoding in the query string. <strong>Default</strong>: `escape()`.
   - `decodeURIComponent` `[Function]` The function to use when decoding percent-encoded characters in the query string. Default: `unescape()`.
   - `filter` `[Function]` The function to use when filtering `query`.

@@ -1,3 +1,5 @@
+import isFunction from 'celia/es/isFunction';
+import isObject from 'celia/es/isObject';
 import _parse from './_parse';
 import _stringify from './_stringify';
 import escape from './escape';
@@ -54,7 +56,12 @@ export default function append(url, query, opts) {
   let decode;
   let encode;
 
-  if (opts) {
+  if (isFunction(opts)) {
+    filter = opts;
+    sep = '&';
+    eq = '=';
+  }
+  else if (isObject(opts)) {
     filter = opts.filter;
     decode = opts.decodeURIComponent;
     encode = opts.encodeURIComponent;
