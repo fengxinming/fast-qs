@@ -1,6 +1,6 @@
 {
   "name": "fast-qs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A tiny query string parsing and stringifying library.",
   "main": "index.js",
   "module": "./es/index.js",
