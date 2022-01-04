@@ -46,7 +46,7 @@ var unescape = require('fast-qs/unescape');
 ```
 
 ```js
-export { 
+import { 
   append,
   decode,
   encode,
