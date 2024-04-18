@@ -104,3 +104,6 @@ dist
 .tern-port
 
 pnpm-lock.yaml
+
+qs-like
+.npmrc

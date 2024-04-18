@@ -2,6 +2,7 @@
 node_modules
 logs
 dist
+qs-like
 coverage
 LICENSE
 README.md
