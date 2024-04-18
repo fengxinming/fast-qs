@@ -1,0 +1,4 @@
+lockfile=false
+package-lock=false
+shamefully-hoist=true
+# registry=https://registry.npmmirror.com
