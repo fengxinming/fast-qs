@@ -19,20 +19,20 @@ $ npm install fast-qs --save
 ### Load `fast-qs` via classical `<script>` tag
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/fast-qs/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fast-qs/dist/index.umd.js"></script>
 ```
 
 or
 ```html
-<script src="https://cdn.jsdelivr.net/npm/fast-qs@2.0.0/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fast-qs@2.0.1/dist/index.umd.js"></script>
 ```
 
 use in window
 ```js
 // window.fastQs
+fastQs.append
 fastQs.escape
 fastQs.parse
-fastQs.prefix
 fastQs.stringify
 fastQs.unescape
 ```
@@ -59,14 +59,14 @@ function parse(
 ): Record<string, string | string[]>;
 ```
 
-- `str` `<string>` The URL query string to parse.
+- `str` `<string>` The URL or URL query string to parse.
 - `options` `[ParseOptions]`
   - `sep` The substring used to delimit key and value pairs in the query string. <strong>Default</strong>: `'&'`.
   - `eq` The substring used to delimit keys and values in the query string. <strong>Default</strong>: '='.
   - `decodeURIComponent` The function to use when decoding percent-encoded characters in the query string. Default: `unescape()`.
   - `filter` The function to use when filtering keys and values from the query string.
   - `searchIndex` The index of the `str` to start searching for the query string.
-  - `searchChar` The substring of the `str` to start searching for the query string. <strong>Default</strong>: `'?'`.
+  - `searchChar` The substring of the `str` to start searching for the query string. Had better use `false` when `str` is URL query string. <strong>Default</strong>: `'?'`.
 
 For example: 
 

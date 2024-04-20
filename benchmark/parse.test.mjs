@@ -1,8 +1,8 @@
-const { parse } = require('../node_modules/querystring');
-const { parse: parse2 } = require('querystringify');
-const { parse: parse3 } = require('query-string');
-const { parse: parse4 } = require('qs');
-const parseQuery = require('../dist/parse');
+import { parse } from 'fast-querystring';
+import { parse as parse2 } from 'querystringify';
+import queryString from 'query-string';
+import { parse as parse4 } from 'qs';
+import parseQuery from '../dist/parse.mjs';
 
 const testData1 = '12342343';
 const testData2 = 'a=1&b=2&c=3&d=&f=';
@@ -10,9 +10,11 @@ const testData3 = '&a=1&b=2&c=3&d=&f=';
 const testData4 = 'abcd1234&a=1&b=2&c=3&d=&f=';
 const testData5 = '?a=1&a=2&a=3&d=&f=';
 
+const opts = { searchChar: false };
+
 // 测试 parseQuery
-module.exports = {
-  '【querystring.parse】': function () {
+export default {
+  '【fast-querystring.parse】': function () {
     parse(null);
     parse(testData1);
     parse(testData2);
@@ -31,12 +33,12 @@ module.exports = {
   },
 
   '【query-string.parse】': function () {
-    parse3(null);
-    parse3(testData1);
-    parse3(testData2);
-    parse3(testData3);
-    parse3(testData4);
-    parse3(testData5);
+    queryString.parse(null);
+    queryString.parse(testData1);
+    queryString.parse(testData2);
+    queryString.parse(testData3);
+    queryString.parse(testData4);
+    queryString.parse(testData5);
   },
 
   '【qs.parse】': function () {
@@ -48,12 +50,12 @@ module.exports = {
     parse4(testData5.slice(1));
   },
 
-  '【parse】': function () {
+  '【fast-qs.parse】': function () {
     parseQuery(null);
-    parseQuery(testData1);
-    parseQuery(testData2);
-    parseQuery(testData3);
-    parseQuery(testData4);
-    parseQuery(testData5);
+    parseQuery(testData1, opts);
+    parseQuery(testData2, opts);
+    parseQuery(testData3, opts);
+    parseQuery(testData4, opts);
+    parseQuery(testData5, opts);
   }
 };
