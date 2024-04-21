@@ -1,5 +1,8 @@
 import unescape from './unescape';
 
+const hashChar = '#';
+const percentageChar = '%';
+
 /**
  * @hidden
  */
@@ -21,66 +24,77 @@ export default function _parseQuery(
     decode = unescape;
   }
 
+  const result: Record<string, string | string[]> = {};
+  let current: string | string[] = '';
+  const set = (key: string, decodeKey: boolean, value: string, decodeValue: boolean) => {
+    if (decodeKey) {
+      key = (decode as any)(key);
+    }
+    if (decodeValue) {
+      value = (decode as any)(value);
+    }
+
+    current = result[key] as any;
+    // 没有相同的key值
+    if (current === undefined) {
+      result[key] = value;
+    }
+    else if ((current as string[]).push) { // 判断是数组
+      (current as string[]).push(value);
+    }
+    else { // 已存在key
+      result[key] = [current as string, value];
+    }
+  };
+  const cb = filter
+    ? (key: string, decodeKey: boolean, value: string, decodeValue: boolean): void => {
+      if (filter(key, value)) {
+        set(key, decodeKey, value, decodeValue);
+      }
+    }
+    : set;
+
   let i = searchIndex === void 0 ? 0 : searchIndex;
 
   let matchedKey = '';
   let matchedValue = '';
-
-  const result: Record<string, string | string[]> = {};
-  let last: string = '';
-  const set = (key: string, value: string) => {
-    last = result[key] as any;
-    // 没有相同的key值
-    if (last === undefined) {
-      result[key] = value;
-    }
-    else if (Array.isArray(last)) { // 继续追加
-      last[last.length] = value;
-    }
-    else { // 已存在key
-      result[key] = [last, value];
-    }
-  };
-  const cb = filter
-    ? (key: string, value: string): void => {
-      if (filter(key, value)) {
-        set(key, value);
-      }
-    }
-    : set;
+  let needDecodeKey = false;
+  let needDecodeValue = false;
 
   for (let c = '', hasEq = false, len = str.length; i < len; i++) {
     c = str[i];
 
     switch (c) {
-      case sep:
+      case sep: // '&'
         if (matchedKey) {
-          cb(matchedKey, decode(matchedValue));
+          cb(matchedKey, needDecodeKey, matchedValue, needDecodeValue);
           hasEq = false;
           matchedKey = '';
           matchedValue = '';
         }
         break;
-      case eq:
+      case eq: // '='
         hasEq = true;
         matchedValue = '';
         break;
-      case '#': // 不解析hash
+      case hashChar: // 不解析hash
         i = len;
         break;
       default:
         if (hasEq) {
           matchedValue += c;
+          needDecodeValue = needDecodeValue || c === percentageChar;
         }
         else {
           matchedKey += c;
+          needDecodeKey = needDecodeKey || c === percentageChar;
         }
     }
   }
 
   // ? or xx=xxx
   if (matchedKey) {
-    cb(matchedKey, decode(matchedValue));
+    cb(matchedKey, needDecodeKey, matchedValue, needDecodeValue);
   }
 
   return result;

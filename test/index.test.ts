@@ -41,18 +41,18 @@ it('测试 stringify', () => {
 it('测试 parse', () => {
   const qs1 = '12342343';
   const qs2 = 'a=1&b=2&c=3&d=%&f=';
-  const qs3 = '&a=1&b=2&c=3&d=&f=';
+  const qs3 = '&a=%7B&%7B=%7D&c=3&d=&f=';
   const qs4 = 'abcd1234&a=1&b=2&c=3&d=&f=';
   const qs5 = '?a=1&a=2&a=3&d=&f=';
+  const qs6 = '=&';
   const url1 = 'https://www.npmjs.com/search?q=qs#hash';
-  const qs6 = '&=&';
   const url2 = 'https://iotx-vision-vod-vpc-hz-pre.aliyun-inc.com/vod/device/localrecord/flv/play/L3Byb2dzL3JlYy8wMC8yMDIxMTIwMS9OMTIyMTIxLkgyNjQ=.flv?token=64c12e95f0e347ccac246a0916d530e3&session=f39b3f80639c4ca18a62ab7a9d77215a';
   const url3 = 'http://demo.com?a=1&a=2&b=1&c=1&hideTopbar=1&hideSidebar=1';
 
   expect(parseQuery(null as any)).toEqual({});
   expect(parseQuery(qs1, {})).toEqual({ 12342343: '' });
   expect(parseQuery(qs2, { sep: '&' })).toEqual({ a: '1', b: '2', c: '3', d: '%', f: '' });
-  expect(parseQuery(qs3, { sep: '&', eq: '=' })).toEqual({ a: '1', b: '2', c: '3', d: '', f: '' });
+  expect(parseQuery(qs3, { sep: '&', eq: '=' })).toEqual({ a: '{', '{': '}', c: '3', d: '', f: '' });
   expect(parseQuery(qs4, { searchChar: false })).toEqual({ abcd1234: '', a: '1', b: '2', c: '3', d: '', f: '' });
   expect(parseQuery(qs5, { searchIndex: 1 })).toEqual({ a: ['1', '2', '3'], d: '', f: '' });
   expect(parseQuery(url1)).toEqual({ q: 'qs' });

@@ -1,4 +1,5 @@
-import { parse } from 'fast-querystring';
+import { parse } from 'node:querystring';
+import { parse as parse1 } from 'fast-querystring';
 import { parse as parse2 } from 'querystringify';
 import queryString from 'query-string';
 import { parse as parse4 } from 'qs';
@@ -14,13 +15,22 @@ const opts = { searchChar: false };
 
 // 测试 parseQuery
 export default {
-  '【fast-querystring.parse】': function () {
+  '【querystring.parse】': function () {
     parse(null);
     parse(testData1);
     parse(testData2);
     parse(testData3);
     parse(testData4);
-    parse(testData5.slice(1));
+    parse(testData5);
+  },
+
+  '【fast-querystring.parse】': function () {
+    parse1(null);
+    parse1(testData1);
+    parse1(testData2);
+    parse1(testData3);
+    parse1(testData4);
+    parse1(testData5);
   },
 
   '【querystringify.parse】': function () {

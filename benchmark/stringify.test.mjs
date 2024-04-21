@@ -1,4 +1,5 @@
-import { stringify } from 'fast-querystring';
+import { stringify } from 'node:querystring';
+import { stringify as stringify1 } from 'fast-querystring';
 import { stringify as stringify2 } from 'querystringify';
 import queryString from 'query-string';
 import { stringify as stringify4 } from 'qs';
@@ -12,12 +13,20 @@ const testData5 = { a: [1, 2, 3, 4], b: 'test' };
 
 // 测试 stringifyQuery
 export default {
-  'fast-querystring.stringify】': function () {
+  '【querystring.stringify】': function () {
     stringify(testData1);
     stringify(testData2);
     stringify(testData3);
     // stringify(testData4);
     stringify(testData5);
+  },
+
+  '【fast-querystring.stringify】': function () {
+    stringify1(testData1);
+    stringify1(testData2);
+    stringify1(testData3);
+    // stringify1(testData4);
+    stringify1(testData5);
   },
 
   '【querystringify.stringify】': function () {
