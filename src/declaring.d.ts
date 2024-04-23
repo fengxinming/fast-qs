@@ -3,8 +3,7 @@ export interface ParseOptions {
   eq?: string;
   decodeURIComponent?: (str: string) => string;
   filter?: (key: string, val: any) => any;
-  searchIndex?: number;
-  searchChar?: string | false;
+  start?: number | string;
 }
 
 export interface StringifyOptions {

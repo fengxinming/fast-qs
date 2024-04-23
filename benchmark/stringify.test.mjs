@@ -1,63 +1,84 @@
 import { stringify } from 'node:querystring';
-import { stringify as stringify1 } from 'fast-querystring';
-import { stringify as stringify2 } from 'querystringify';
-import queryString from 'query-string';
-import { stringify as stringify4 } from 'qs';
 import stringifyQuery from '../dist/stringify.mjs';
+import encodeString from './fast-encode.mjs';
 
 const testData1 = { a: 1, b: null, c: undefined, d: NaN, e: '', f: true, g: false, h: Infinity };
 const testData2 = { a: '', b: undefined, c: ['\'1\'', '2', '3', NaN, undefined], f: null, '': 'null' };
 const testData3 = { a: { key: 'value', key2: 'value2' }, d: undefined, f: '' };
-// const testData4 = { a: () => (1), b: Symbol('test') };
-const testData5 = { a: [1, 2, 3, 4], b: 'test' };
+const testData4 = { a: () => (1), b: Symbol('test') };
+const testData5 = { foo: 'bar', bar: 'foo', baz: 'foo' };
+const testData6 = {
+  frappucino: 'muffin',
+  goat: 'scone',
+  pond: 'moose',
+  foo: ['bar', 'baz', 'bal'],
+  bool: true,
+  // eslint-disable-next-line no-undef
+  bigIntKey: BigInt(100),
+  numberKey: 256
+};
+
+const opts = { encodeURIComponent: encodeString };
 
 // 测试 stringifyQuery
-export default {
-  '【querystring.stringify】': function () {
-    stringify(testData1);
-    stringify(testData2);
-    stringify(testData3);
-    // stringify(testData4);
-    stringify(testData5);
+export default [
+  {
+    '【node:querystring.stringify】'() {
+      stringify(testData1);
+    },
+
+    '【fast-qs.stringify】'() {
+      stringifyQuery(testData1, opts);
+    }
   },
 
-  '【fast-querystring.stringify】': function () {
-    stringify1(testData1);
-    stringify1(testData2);
-    stringify1(testData3);
-    // stringify1(testData4);
-    stringify1(testData5);
+  {
+    '【node:querystring.stringify】'() {
+      stringify(testData2);
+    },
+
+    '【fast-qs.stringify】'() {
+      stringifyQuery(testData2, opts);
+    }
   },
 
-  '【querystringify.stringify】': function () {
-    stringify2(testData1);
-    stringify2(testData2);
-    stringify2(testData3);
-    // stringify2(testData4);
-    stringify2(testData5);
+  {
+    '【node:querystring.stringify】'() {
+      stringify(testData3);
+    },
+
+    '【fast-qs.stringify】'() {
+      stringifyQuery(testData3, opts);
+    }
   },
 
-  '【query-string.stringify】': function () {
-    queryString.stringify(testData1);
-    queryString.stringify(testData2);
-    queryString.stringify(testData3);
-    // queryString.stringify(testData4);
-    queryString.stringify(testData5);
+  {
+    '【node:querystring.stringify】'() {
+      stringify(testData4);
+    },
+
+    '【fast-qs.stringify】'() {
+      stringifyQuery(testData4, opts);
+    }
   },
 
-  '【qs.stringify】': function () {
-    stringify4(testData1);
-    stringify4(testData2);
-    stringify4(testData3);
-    // stringify4(testData4);
-    stringify4(testData5);
+  {
+    '【node:querystring.stringify】'() {
+      stringify(testData5);
+    },
+
+    '【fast-qs.stringify】'() {
+      stringifyQuery(testData5, opts);
+    }
   },
 
-  '【fast-qs.stringify】': function () {
-    stringifyQuery(testData1);
-    stringifyQuery(testData2);
-    stringifyQuery(testData3);
-    // stringifyQuery(testData4);
-    stringifyQuery(testData5);
+  {
+    '【node:querystring.stringify】'() {
+      stringify(testData6);
+    },
+
+    '【fast-qs.stringify】'() {
+      stringifyQuery(testData6, opts);
+    }
   }
-};
+];
