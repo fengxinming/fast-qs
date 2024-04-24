@@ -1,6 +1,6 @@
 {
   "name": "fast-qs",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A tiny URL or URL query string parsing and stringifying library.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

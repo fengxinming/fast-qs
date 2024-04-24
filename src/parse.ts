@@ -1,4 +1,5 @@
 import parseQuery from './_parse';
+import unescape from './unescape';
 
 import { ParseOptions } from './declaring';
 
@@ -25,7 +26,11 @@ export default function parse(
     options = {};
   }
 
-  const { start } = options;
+  const decode = options.decodeURIComponent || unescape;
+  const sep = options.sep || '&';
+  const eq = options.eq || '=';
+
+  const { start, filter } = options;
   const searchIndex = start === 0
     ? 0
     : start as number < 0
@@ -34,12 +39,48 @@ export default function parse(
         ? Math.min(start as number, str.length - 1)
         : str.indexOf(start as string || '?') + 1;
 
-  return parseQuery(
+  const result: Record<string, string | string[]> = {};
+
+  let current;
+  const set = (
+    key: string,
+    needDecodeK: boolean,
+    value: string,
+    needDecodeV: boolean
+  ): void => {
+    if (needDecodeK) {
+      key = decode(key);
+    }
+    if (needDecodeV) {
+      value = decode(value);
+    }
+
+    current = result[key] as any;
+    // 没有相同的key值
+    if (current === void 0) {
+      result[key] = value;
+    }
+    else if ((current as string[]).push) { // 判断是数组
+      (current as string[]).push(value);
+    }
+    else { // 已存在key
+      result[key] = [current as string, value];
+    }
+  };
+
+  parseQuery(
     str,
     searchIndex,
-    options.sep,
-    options.eq,
-    options.decodeURIComponent,
-    options.filter
+    sep,
+    eq,
+    filter
+      ? (key, needDecodeK, value, needDecodeV) => {
+        if (filter(key, value)) {
+          set(key, needDecodeK, value, needDecodeV);
+        }
+      }
+      : set
   );
+
+  return result;
 }

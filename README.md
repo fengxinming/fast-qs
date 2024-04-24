@@ -226,3 +226,15 @@ The `escape()` method is used by `stringify()` and is generally not expected to 
 - `str` `<string>`: `unescape()` method performs decoding of URL percent-encoded characters on the given str.
 
 The `unescape()` method is used by `parse()` and is generally not expected to be used directly. It is exported primarily to allow application code to provide a replacement decoding implementation if necessary by assigning `unescape()` to an alternative function.
+
+## Test
+
+```bash
+$ npm test
+```
+
+## Benchmark
+
+```bash
+$ npm run benchmark
+```

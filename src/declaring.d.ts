@@ -17,6 +17,5 @@ export interface AppendOptions {
   sep?: string;
   eq?: string;
   encodeURIComponent?: (str: string) => string;
-  decodeURIComponent?: (str: string) => string;
   filter?: (key: string, val: any) => any;
 }
