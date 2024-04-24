@@ -115,7 +115,7 @@ export default function append(
       if (filter) {
         const ret: string[] = [];
         forOwn(
-          parseQuery(query, sep, eq, decodeURIComponent, filter),
+          parseQuery(query, 0, sep, eq, decodeURIComponent, filter),
           (val: string | string[], key: string) => {
             if (Array.isArray(val)) {
               val.forEach((v: string) => {

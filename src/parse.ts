@@ -1,5 +1,3 @@
-
-import { fitIndex, isNumber } from 'celia';
 import parseQuery from './_parse';
 
 import { ParseOptions } from './declaring';
@@ -27,21 +25,21 @@ export default function parse(
     options = {};
   }
 
-  let { searchIndex } = options;
-  const { searchChar } = options;
-  if (isNumber(searchIndex)) {
-    searchIndex = fitIndex(searchIndex, str.length);
-  }
-  else if (searchChar !== false) {
-    searchIndex = str.indexOf(searchChar || '?') + 1;
-  }
+  const { start } = options;
+  const searchIndex = start === 0
+    ? 0
+    : start as number < 0
+      ? Math.max(0, str.length + (start as number))
+      : start as number > 0
+        ? Math.min(start as number, str.length - 1)
+        : str.indexOf(start as string || '?') + 1;
 
   return parseQuery(
     str,
+    searchIndex,
     options.sep,
     options.eq,
     options.decodeURIComponent,
-    options.filter,
-    searchIndex
+    options.filter
   );
 }

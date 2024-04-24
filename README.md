@@ -4,7 +4,7 @@
 [![NPM Downloads](https://img.shields.io/npm/dm/fast-qs.svg?style=flat)](https://npmjs.org/package/fast-qs)
 [![](https://data.jsdelivr.com/v1/package/npm/fast-qs/badge)](https://www.jsdelivr.com/package/npm/fast-qs)
 
-> A tiny query string parsing and stringifying library.
+> A tiny URL or URL query string parsing and stringifying library.
 
 ---
 
@@ -19,20 +19,20 @@ $ npm install fast-qs --save
 ### Load `fast-qs` via classical `<script>` tag
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/fast-qs/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fast-qs/dist/index.umd.js"></script>
 ```
 
 or
 ```html
-<script src="https://cdn.jsdelivr.net/npm/fast-qs@2.0.0/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fast-qs@2.0.1/dist/index.umd.js"></script>
 ```
 
 use in window
 ```js
 // window.fastQs
+fastQs.append
 fastQs.escape
 fastQs.parse
-fastQs.prefix
 fastQs.stringify
 fastQs.unescape
 ```
@@ -59,14 +59,13 @@ function parse(
 ): Record<string, string | string[]>;
 ```
 
-- `str` `<string>` The URL query string to parse.
+- `str` `<string>` The URL or URL query string to parse.
 - `options` `[ParseOptions]`
   - `sep` The substring used to delimit key and value pairs in the query string. <strong>Default</strong>: `'&'`.
   - `eq` The substring used to delimit keys and values in the query string. <strong>Default</strong>: '='.
   - `decodeURIComponent` The function to use when decoding percent-encoded characters in the query string. Default: `unescape()`.
   - `filter` The function to use when filtering keys and values from the query string.
-  - `searchIndex` The index of the `str` to start searching for the query string.
-  - `searchChar` The substring of the `str` to start searching for the query string. <strong>Default</strong>: `'?'`.
+  - `start` The index of the `str` or substring of the `str` to start searching for the query string. <strong>Default</strong>: `'?'`.
 
 For example: 
 
@@ -146,7 +145,7 @@ stringify({ a: { key: 'value', 'key2': 'value2' }, d: undefined, f: '' })
 // => 'a=%7B%22key%22%3A%22value%22%2C%22key2%22%3A%22value2%22%7D&d=&f='
 
 stringify({ a: () => { } })
-// => 'a=%28%29%20%3D%3E%20%7B%7D'
+// => 'a='
 
 stringify({ a: [1, 2, 3, 4], b: 'test' }, {
   filter(key) {
