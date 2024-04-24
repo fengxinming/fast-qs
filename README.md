@@ -49,8 +49,7 @@ interface ParseOptions {
   eq?: string;
   decodeURIComponent?: (str: string) => string;
   filter?: (key: string, val: any) => any;
-  searchIndex?: number;
-  searchChar?: string | false;
+  start?: number | string;
 }
 
 function parse(
@@ -65,7 +64,7 @@ function parse(
   - `eq` The substring used to delimit keys and values in the query string. <strong>Default</strong>: '='.
   - `decodeURIComponent` The function to use when decoding percent-encoded characters in the query string. Default: `unescape()`.
   - `filter` The function to use when filtering keys and values from the query string.
-  - `start` The index of the `str` or substring of the `str` to start searching for the query string. <strong>Default</strong>: `'?'`.
+  - `start` The index or substring of the `str` to start searching for the query string. <strong>Default</strong>: `'?'`.
 
 For example: 
 
@@ -164,7 +163,6 @@ export interface AppendOptions {
   sep?: string;
   eq?: string;
   encodeURIComponent?: (str: string) => string;
-  decodeURIComponent?: (str: string) => string;
   filter?: (key: string, val: any) => any;
 }
 
