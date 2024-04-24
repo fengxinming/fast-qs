@@ -1,38 +1,5 @@
-import unescape from './unescape';
-
 const hashChar = '#';
 const percentageChar = '%';
-
-/**
- * 给返回结果设置新的key和value
- */
-function set(
-  result: Record<string, string | string[]>,
-  key: string,
-  needDecodeK: boolean,
-  value: string,
-  needDecodeV: boolean,
-  decode: (val: string) => string,
-): void {
-  if (needDecodeK) {
-    key = decode(key);
-  }
-  if (needDecodeV) {
-    value = decode(value);
-  }
-
-  const current = result[key] as any;
-  // 没有相同的key值
-  if (current === void 0) {
-    result[key] = value;
-  }
-  else if ((current as string[]).push) { // 判断是数组
-    (current as string[]).push(value);
-  }
-  else { // 已存在key
-    result[key] = [current as string, value];
-  }
-}
 
 /**
  * @hidden
@@ -40,38 +7,15 @@ function set(
 export default function _parseQuery(
   str: string,
   start: number,
-  sep?: string,
-  eq?: string,
-  decode?: (val: string) => string,
-  filter?: (key: string, val: any) => any,
-): Record<string, string | string[]> {
-  if (!sep) {
-    sep = '&';
-  }
-  if (!eq) {
-    eq = '=';
-  }
-  if (!decode) {
-    decode = unescape;
-  }
-
-  const result: Record<string, string | string[]> = {};
-
-  const push = filter
-    ? (
-      result: Record<string, string | string[]>,
-      key: string,
-      needDecodeK: boolean,
-      value: string,
-      needDecodeV: boolean,
-      decode: (val: string) => string,
-    ): void => {
-      if (filter(key, value)) {
-        set(result, key, needDecodeK, value, needDecodeV, decode);
-      }
-    }
-    : set;
-
+  sep: string,
+  eq: string,
+  callback: (
+    key: string,
+    needDecodeK: boolean,
+    value: string,
+    needDecodeV: boolean
+  ) => void
+): void {
   const eqLen = eq.length;
   const sepLen = sep.length;
 
@@ -98,7 +42,7 @@ export default function _parseQuery(
         }
 
         if (matchedKey || hasEq) {
-          push(result, matchedKey, needDecodeKey, matchedValue, needDecodeValue, decode);
+          callback(matchedKey, needDecodeKey, matchedValue, needDecodeValue);
         }
 
         // 重置变量
@@ -136,11 +80,9 @@ export default function _parseQuery(
   }
 
   if (hasEq) { // foo=bar / foo=
-    push(result, matchedKey, needDecodeKey, str.substring(startIndex, len), needDecodeValue, decode);
+    callback(matchedKey, needDecodeKey, str.substring(startIndex, len), needDecodeValue);
   }
   else if (startIndex < len) { // &foo
-    push(result, str.substring(startIndex, len), needDecodeKey, matchedValue, needDecodeValue, decode);
+    callback(str.substring(startIndex, len), needDecodeKey, matchedValue, needDecodeValue);
   }
-
-  return result;
 }

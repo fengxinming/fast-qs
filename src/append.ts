@@ -1,7 +1,6 @@
 
 import parseQuery from './_parse';
 import stringifyQuery from './_stringify';
-import { forOwn } from 'celia';
 import { AppendOptions } from './declaring';
 
 function concat(url: string, query: string, hasQM: boolean): string {
@@ -99,7 +98,6 @@ export default function append(
   }
 
   const {
-    decodeURIComponent,
     encodeURIComponent,
     filter
   } = opts;
@@ -113,22 +111,18 @@ export default function append(
     }
     case 'string':
       if (filter) {
-        const ret: string[] = [];
-        forOwn(
-          parseQuery(query, 0, sep, eq, decodeURIComponent, filter),
-          (val: string | string[], key: string) => {
-            if (Array.isArray(val)) {
-              val.forEach((v: string) => {
-              // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-                ret[ret.length] = key + eq + v;
-              });
+        let ret = '';
+        parseQuery(query, 0, sep, eq, (key, needDecodeK, val) => {
+          if (filter(key, val)) {
+            if (ret) {
+              ret += sep;
             }
-            else {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-              ret[ret.length] = key + eq + val;
-            }
-          });
-        qs = ret.join(sep);
+            ret += key;
+            ret += eq;
+            ret += val;
+          }
+        });
+        qs = ret;
       }
       else {
         qs = query;
